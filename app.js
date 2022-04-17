@@ -6,8 +6,8 @@ const olToDoListE = document.getElementById("list");
 btnE.addEventListener("click", onClick);
 
 function onClick() {
-  const note = noteE.value;
-  if (note.length > 0) {
+  const note = noteE.value.trim();
+  if (note) {
     const liE = document.createElement("li");
     liE.textContent = note;
     noteE.value = "";
