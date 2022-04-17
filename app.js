@@ -6,8 +6,11 @@ const olToDoListE = document.getElementById("list");
 btnE.addEventListener("click", onClick);
 
 function onClick() {
-  const liE = document.createElement("li");
-  liE.textContent = noteE.innerHTML = noteE.value;
-  noteE.value = "";
-  olToDoListE.append(liE);
+  const note = noteE.value;
+  if (note.length > 0) {
+    const liE = document.createElement("li");
+    liE.textContent = note;
+    noteE.value = "";
+    olToDoListE.append(liE);
+  }
 }
