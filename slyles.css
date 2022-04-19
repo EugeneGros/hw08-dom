@@ -1,16 +1,23 @@
 .btn-container {
     display: flex;
     width: 25%;
-gap: 10%;
-margin-bottom: 2%;
-margin: 10px auto;
+    gap: 10%;
+    margin-bottom: 2%;
 }
 
 .list-container {
-
     width: 25%;
     height: 300px;
     overflow-y: auto;
     border: 1px solid black;
-    margin: 0 auto;
+} 
+
+.list-item-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 3px 3px;
+    margin: 10px 10px;
+    background-color: aquamarine;
 }
+
