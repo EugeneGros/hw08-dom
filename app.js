@@ -1,31 +1,23 @@
-// const noteE = document.getElementById("text").value;
-const inpLastEl = document.getElementById("inpL");
-const inpFirstEl = document.getElementById("inpF");
-const inpPhomeEl = document.getElementById("inpP");
+const ELEMENT = (tag, id, className, value) =>
+  `<${tag} id="${id}" class="${className}">${value}</${tag}>`;
+
+const inpEl = document.getElementById("inp");
 const btnE = document.getElementById("btn");
 const olToDoListE = document.getElementById("list");
 const btnContainerControl = document.getElementById("btn-container");
 const inputsE = document.querySelectorAll(".user-info");
 
 btnE.addEventListener("click", onAddList);
+olToDoListE.addEventListener("click", onClick);
 
-const templateE = document.getElementById("template");
-
-function onAddList(params) {
-  // if (!chackValue()) {
-  //   return;
-  // }
+function onAddList() {
   if (dataIsNotValid(inputsE)) {
     alert("Empty field");
     return;
   }
-
-  const note = `${inpLastEl.value} ${inpFirstEl.value} ${inpPhomeEl.value}`;
-  const el = createNoteE(note);
-  addElement(el, olToDoListE);
-  clearValue(inpLastEl);
-  clearValue(inpFirstEl);
-  clearValue(inpPhomeEl);
+  const note = inpEl.value;
+  addElement(note, olToDoListE);
+  clearValue(inpEl);
 }
 
 btnContainerControl.addEventListener("keyup", function (event) {
@@ -35,35 +27,41 @@ btnContainerControl.addEventListener("keyup", function (event) {
   }
 });
 
-function createNoteE(note) {
-  const el = templateE.innerHTML.replace("{{note}}", note);
-  return el;
-}
+function addElement(note, container) {
+  const wrapper = document.createElement("div");
+  // container.id = '';
+  wrapper.classList.add("table-items-wrapper");
 
-function addElement(element, container) {
-  container.innerHTML += element;
+  console.log(wrapper.outerHTML);
+  const el = ELEMENT("div", "note", "table-item", note);
+  console.log(el);
+
+  wrapper.insertAdjacentHTML("beforeend", el);
+  wrapper.insertAdjacentHTML(
+    "beforeend",
+    `<div class="delete" id="delete">X</div>`
+  );
+  container.append(wrapper);
 }
 
 function clearValue(inpEl) {
   inpEl.value = "";
 }
 
-// function chackValue() {
-//   if (!inpLastEl.value.trim()) {
-//     alert("LastName is Empty");
-//     return;
-//   }
-//   if (!inpFirstEl.value.trim()) {
-//     alert("FirstName is Empty");
-//     return;
-//   }
-//   if (!inpPhomeEl.value.trim()) {
-//     alert("PhoneNumber is Empty");
-//     return;
-//   }
-//   return true;
-// }
-
 function dataIsNotValid(elements) {
   return [...elements].some((e) => !e.value.trim());
+}
+
+function onClick(e) {
+  console.log(e.target);
+  if (e.target.id === "delete") {
+    const item = e.target.closest(".table-items-wrapper");
+    item.remove();
+  }
+  if (e.target.id === "note") {
+    console.dir(e);
+
+    const item = e.target;
+    item.classList.toggle("delete");
+  }
 }
