@@ -57,6 +57,9 @@ input {
     padding: 0.5em 0;
     border: 1px solid black;
     padding: 10px;
+    background-color: green;
+}
+.table-item-col {
     background-color: yellow;
 
 }

@@ -33,7 +33,7 @@ function addElement(note, container) {
   wrapper.classList.add("table-items-wrapper");
 
   console.log(wrapper.outerHTML);
-  const el = ELEMENT("div", "note", "table-item", note);
+  const el = ELEMENT("div", "note", "table-item table-item-col", note);
   console.log(el);
 
   wrapper.insertAdjacentHTML("beforeend", el);
@@ -62,6 +62,6 @@ function onClick(e) {
     console.dir(e);
 
     const item = e.target;
-    item.classList.toggle("delete");
+    item.classList.toggle("table-item-col");
   }
 }
