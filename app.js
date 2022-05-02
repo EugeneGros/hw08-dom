@@ -21,9 +21,21 @@ function onAddList() {
 }
 
 btnContainerControl.addEventListener("keyup", function (event) {
+  // console.log(event);
   if (event.keyCode === 13) {
     event.preventDefault();
     onAddList();
+  }
+  if (event.keyCode === 17 && event.keyCode === 8) {
+    event.preventDefault();
+    clearValue(inpEl);
+  }
+  if (event.keyCode) {
+    if (dataIsNotValid(inputsE)) {
+      // alert("Empty field");
+      clearValue(inpEl);
+      return;
+    }
   }
 });
 
