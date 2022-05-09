@@ -1,73 +1,33 @@
-// const noteE = document.getElementById("text").value;
-const inpLastEl = document.getElementById("inpL");
-const inpFirstEl = document.getElementById("inpF");
-const inpPhomeEl = document.getElementById("inpP");
-const btnE = document.getElementById("btn");
-const olToDoListE = document.getElementById("list");
+class Group {
+  students = [];
 
-btnE.addEventListener("click", onAddList);
-
-const templateE = document.getElementById("template");
-
-function onAddList(params) {
-  if (!chackValue()) {
-    return;
+  addStudent(student) {
+    this.students.push(student);
   }
-
-  const note = `${inpLastEl.value} ${inpFirstEl.value} ${inpPhomeEl.value}`;
-  const el = createNoteE(note);
-  addElement(el, olToDoListE);
-  clearValue(inpLastEl);
-  clearValue(inpFirstEl);
-  clearValue(inpPhomeEl);
+  getAverageMark() {
+    const groupAverageMarks = this.students.reduce((a1, s) => {
+      const studentAverageMarks = s.marks.reduce((a2, m) => {
+        return a2 + m / s.marks.length;
+      }, 0);
+      return a1 + studentAverageMarks / this.students.length;
+    }, 0);
+    return groupAverageMarks;
+  }
 }
 
-inpLastEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
+class Student {
+  constructor(name, marks) {
+    this.name = name;
+    this.marks = marks;
   }
-});
-
-inpFirstEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-inpPhomeEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-function createNoteE(note) {
-  const el = templateE.innerHTML.replace("{{note}}", note);
-  return el;
 }
 
-function addElement(element, container) {
-  container.innerHTML += element;
-}
+const feGroup = new Group();
+const firstStudent = new Student("John Doe", [10, 102, 0]);
 
-function clearValue(inpEl) {
-  inpEl.value = "";
-}
+feGroup.addStudent(new Student("John Doe", [10, 10, 5, 10]));
+feGroup.addStudent(new Student("Alex Smith", [10, 9, 8]));
+feGroup.addStudent(new Student("Bob Johnson", [9, 10, 10, 8]));
 
-function chackValue() {
-  if (!inpLastEl.value.trim()) {
-    alert("LastName is Empty");
-    return;
-  }
-  if (!inpFirstEl.value.trim()) {
-    alert("FirstName is Empty");
-    return;
-  }
-  if (!inpPhomeEl.value.trim()) {
-    alert("PhoneNumber is Empty");
-    return;
-  }
-  return true;
-}
+console.log(feGroup.students); // [{},{},{}]
+console.log(feGroup.getAverageMark()); // 20
