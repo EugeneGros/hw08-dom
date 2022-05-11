@@ -4,23 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="tabs/tabs.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="./tabs/tabs.js" defer></script>
+    <script src="./app.js" defer></script>
     <title>Document</title>
-    <link rel="stylesheet" href="slyles.css" />
-    <script src="./app.js" async defer></script>
   </head>
   <body>
-    <div class="btn-container">
-      <input type="text" id="inpL" placeholder="LastName" />
-      <input type="text" id="inpF" placeholder="FirstName" />
-      <input type="text" id="inpP" placeholder="PhoneNumber" />
-      <button id="btn">SAVE</button>
+    <div class="tabs-conteiner">
+      <div class="tabs-title-conteiner">
+        <div>Title1</div>
+        <div>Title2</div>
+        <div>Title3</div>
+        <!-- <div class="tabs-title">Title1</div>
+        <div class="tabs-title">Title2</div>
+        <div class="tabs-title">Title2</div> -->
+      </div>
+      <div class="tabs-body-conteiner">
+        <div>Body1</div>
+        <div>Body2</div>
+        <div>Body3</div>
+      </div>
     </div>
-    <ol class="list-container" id="list"></ol>
-
-    <script id="template" type="text/template">
-      <li class="list-item-container">
-        <div>{{note}}</div>
-      </li>
-    </script>
   </body>
 </html>
