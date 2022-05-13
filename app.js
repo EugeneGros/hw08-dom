@@ -1,73 +1,15 @@
-// const noteE = document.getElementById("text").value;
-const inpLastEl = document.getElementById("inpL");
-const inpFirstEl = document.getElementById("inpF");
-const inpPhomeEl = document.getElementById("inpP");
-const btnE = document.getElementById("btn");
-const olToDoListE = document.getElementById("list");
+// const hamb = new Hamb(document.querySelector("#hamb"));
 
-btnE.addEventListener("click", onAddList);
+const hamb = document.querySelector("#hamb");
+const menu = document.querySelector("#menu").cloneNode(1);
 
-const templateE = document.getElementById("template");
+hamb.addEventListener("click", hambHandler);
 
-function onAddList(params) {
-  if (!chackValue()) {
-    return;
-  }
-
-  const note = `${inpLastEl.value} ${inpFirstEl.value} ${inpPhomeEl.value}`;
-  const el = createNoteE(note);
-  addElement(el, olToDoListE);
-  clearValue(inpLastEl);
-  clearValue(inpFirstEl);
-  clearValue(inpPhomeEl);
-}
-
-inpLastEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-inpFirstEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-inpPhomeEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-function createNoteE(note) {
-  const el = templateE.innerHTML.replace("{{note}}", note);
-  return el;
-}
-
-function addElement(element, container) {
-  container.innerHTML += element;
-}
-
-function clearValue(inpEl) {
-  inpEl.value = "";
-}
-
-function chackValue() {
-  if (!inpLastEl.value.trim()) {
-    alert("LastName is Empty");
-    return;
-  }
-  if (!inpFirstEl.value.trim()) {
-    alert("FirstName is Empty");
-    return;
-  }
-  if (!inpPhomeEl.value.trim()) {
-    alert("PhoneNumber is Empty");
-    return;
-  }
-  return true;
+function hambHandler(e) {
+  e.preventDefault();
+  hamb.classList.toggle("active");
+  // const popup = new Popup(document.querySelector("#popup");
+  const popup = new Popup(document.querySelector("#popup"));
+  //   popup.classList.toggle("open");
+  //   popup.appendChild(menu);
 }
