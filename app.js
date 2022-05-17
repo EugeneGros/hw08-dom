@@ -1,73 +1,45 @@
-// const noteE = document.getElementById("text").value;
-const inpLastEl = document.getElementById("inpL");
-const inpFirstEl = document.getElementById("inpF");
-const inpPhomeEl = document.getElementById("inpP");
+const url = `https://api.github.com/users`;
+const fields = ["public_repos", "followers", "following"];
+const inpEl = document.getElementById("inp");
 const btnE = document.getElementById("btn");
-const olToDoListE = document.getElementById("list");
+const dateUser = document.getElementById("list");
 
-btnE.addEventListener("click", onAddList);
+btnE.addEventListener("click", onGetUser);
 
-const templateE = document.getElementById("template");
-
-function onAddList(params) {
-  if (!chackValue()) {
-    return;
+class GitHub {
+  constructor(user) {
+    this.user = inpEl.value;
+    this.urlUser = `${url}/${this.user}`;
   }
 
-  const note = `${inpLastEl.value} ${inpFirstEl.value} ${inpPhomeEl.value}`;
-  const el = createNoteE(note);
-  addElement(el, olToDoListE);
-  clearValue(inpLastEl);
-  clearValue(inpFirstEl);
-  clearValue(inpPhomeEl);
+  getUser() {
+    fetch(this.urlUser)
+      .then((r) => r.json())
+      .then((r) => {
+        renderUser(r);
+      })
+      .catch((e) => {
+        if (e) {
+          dateUser.innerHTML = "ERROR " + e;
+        }
+      });
+  }
 }
 
-inpLastEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-inpFirstEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-inpPhomeEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
-
-function createNoteE(note) {
-  const el = templateE.innerHTML.replace("{{note}}", note);
-  return el;
+function onGetUser() {
+  const user = new GitHub(inpEl);
+  user.getUser();
 }
 
-function addElement(element, container) {
-  container.innerHTML += element;
+function renderUser(user) {
+  addElement(`<div><img src="${user.avatar_url}"/></div>`, dateUser);
+  fields.map((t) => {
+    addElement(`<div>${t} - ${user[t]}</div>`);
+  });
 }
 
-function clearValue(inpEl) {
-  inpEl.value = "";
-}
-
-function chackValue() {
-  if (!inpLastEl.value.trim()) {
-    alert("LastName is Empty");
-    return;
-  }
-  if (!inpFirstEl.value.trim()) {
-    alert("FirstName is Empty");
-    return;
-  }
-  if (!inpPhomeEl.value.trim()) {
-    alert("PhoneNumber is Empty");
-    return;
-  }
-  return true;
+function addElement(note) {
+  const wrapper = document.createElement("div");
+  wrapper.insertAdjacentHTML("beforeend", note);
+  dateUser.append(wrapper);
 }
