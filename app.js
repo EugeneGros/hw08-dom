@@ -19,10 +19,12 @@ class GitHub {
         renderUser(r);
       })
       .catch((e) => {
+        console.log(e);
         if (e) {
           dateUser.innerHTML = "ERROR " + e;
         }
       });
+    console.log(r);
   }
 }
 
@@ -32,6 +34,10 @@ function onGetUser() {
 }
 
 function renderUser(user) {
+  if (user.message == "Not Found") {
+    dateUser.innerHTML = user.message;
+    return;
+  }
   addElement(`<div><img src="${user.avatar_url}"/></div>`, dateUser);
   fields.map((t) => {
     addElement(`<div>${t} - ${user[t]}</div>`);
