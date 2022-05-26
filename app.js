@@ -1,73 +1,135 @@
-// const noteE = document.getElementById("text").value;
-const inpLastEl = document.getElementById("inpL");
-const inpFirstEl = document.getElementById("inpF");
-const inpPhomeEl = document.getElementById("inpP");
-const btnE = document.getElementById("btn");
-const olToDoListE = document.getElementById("list");
+const inpTitleAdd = document.getElementById("inpTitleAdd");
+const inpBodyAdd = document.getElementById("inpBodyAdd");
+const btnAdd = document.getElementById("btnAdd");
+const todoC = document.querySelector(".todos-list-cont");
 
-btnE.addEventListener("click", onAddList);
+const inpTitleEdit = document.getElementById("inpTitleEdit");
+const inpBodyEdit = document.getElementById("inpBodyEdit");
+const btnEdit = document.getElementById("btnEdit");
 
-const templateE = document.getElementById("template");
+let todos = [];
+let currentTodo = null;
 
-function onAddList(params) {
-  if (!chackValue()) {
-    return;
-  }
+btnAdd.addEventListener("click", onAddList);
+btnEdit.addEventListener("click", onEditList);
 
-  const note = `${inpLastEl.value} ${inpFirstEl.value} ${inpPhomeEl.value}`;
-  const el = createNoteE(note);
-  addElement(el, olToDoListE);
-  clearValue(inpLastEl);
-  clearValue(inpFirstEl);
-  clearValue(inpPhomeEl);
+todoC.addEventListener("click", onClick);
+
+const todo = new Todos();
+updateList();
+
+function updateList() {
+  todo.getTodos().then((r) => {
+    todos = r.splice(0, 40);
+    renderTodo(todos);
+  });
 }
 
-inpLastEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
+const ELEMENT = (tag, id, className, value) =>
+  `<${tag} id="${id}" class="${className}">${value}</${tag}>`;
 
-inpFirstEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
+function renderTodo(data) {
+  todoC.innerHTML = "";
 
-inpPhomeEl.addEventListener("keyup", function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    onAddList();
-  }
-});
+  const html = data.map((e) => {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("todo-cont");
+    if (!e.isComplete) {
+      wrapper.classList.add("table-item-col");
+    }
 
-function createNoteE(note) {
-  const el = templateE.innerHTML.replace("{{note}}", note);
-  return el;
+    wrapper.id = e.id;
+    const elTitle = ELEMENT(
+      "div",
+      "note",
+      "table-item table-item-col",
+      e.title
+    );
+    const elBody = ELEMENT("div", "note", "table-item table-item-col", e.body);
+    const elDate = ELEMENT(
+      "div",
+      "note",
+      "table-item table-item-col",
+      e.createDate
+    );
+    const elIsComplete = ELEMENT(
+      "div",
+      "note",
+      "table-item table-item-col",
+      e.isComplete
+    );
+
+    wrapper.insertAdjacentHTML("beforeend", elTitle);
+    wrapper.insertAdjacentHTML("beforeend", elBody);
+    wrapper.insertAdjacentHTML("beforeend", elDate);
+    wrapper.insertAdjacentHTML("beforeend", elIsComplete);
+    wrapper.insertAdjacentHTML(
+      "beforeend",
+      `<div class="delete" id="delete">X</div>`
+    );
+    wrapper.insertAdjacentHTML(
+      "beforeend",
+      `<div class="completed" id="completed">V</div>`
+    );
+    todoC.append(wrapper);
+  });
 }
 
-function addElement(element, container) {
-  container.innerHTML += element;
+function onAddList() {
+  const todoItem = {
+    title: inpTitleAdd.value,
+    body: inpBodyAdd.value,
+    isComplete: false,
+  };
+
+  todo.createTodo(todoItem).then((r) => {
+    console.log(r);
+    updateList();
+  });
 }
 
-function clearValue(inpEl) {
-  inpEl.value = "";
+function onEditList() {
+  todo.getTodo(currentTodo).then((r) => {
+    const todoItem = {
+      id: currentTodo,
+      title: inpTitleEdit.value,
+      body: inpBodyEdit.value,
+    };
+    todo.editTodo(todoItem).then((r) => {
+      updateList();
+      document.getElementById("item-cont").classList.toggle("display");
+    });
+  });
 }
 
-function chackValue() {
-  if (!inpLastEl.value.trim()) {
-    alert("LastName is Empty");
-    return;
+function onClick(e) {
+  if (e.target.id === "delete") {
+    const item = e.target.closest(".todo-cont");
+    todo.deleteTodo(item.id).then((r) => {
+      updateList();
+    });
   }
-  if (!inpFirstEl.value.trim()) {
-    alert("FirstName is Empty");
-    return;
+
+  if (e.target.id === "completed") {
+    const item = e.target.closest(".todo-cont");
+    todo.getTodo(item.id).then((r) => {
+      const todoItem = {
+        id: item.id,
+        isComplete: !r.isComplete,
+      };
+      todo.editTodo(todoItem).then((r) => {
+        updateList();
+      });
+    });
   }
-  if (!inpPhomeEl.value.trim()) {
-    alert("PhoneNumber is Empty");
-    return;
+
+  if (e.target.id === "note") {
+    document.getElementById("item-cont").classList.add("display");
+    const item = e.target.closest(".todo-cont");
+    todo.getTodo(item.id).then((r) => {
+      inpTitleEdit.value = r.title;
+      inpBodyEdit.value = r.body;
+      currentTodo = r.id;
+    });
   }
-  return true;
 }

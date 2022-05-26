@@ -1,0 +1,158 @@
+/* .cont {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo-cont {
+    max-width: 50%;
+    height: 600px;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.item-cont{
+
+}
+
+li {
+padding: 5px 10px;
+    background-color: lightblue;
+    border: 1px solid gray;
+    list-style-type: none;
+}
+
+.todo-item-container{
+        display: flex;
+            width: 100%;
+            gap: 2%;
+            margin-bottom: 2%;
+            padding: 20px;
+            
+}
+.item-container{
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        overflow: auto;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+        cursor: pointer;
+}
+
+input {
+    outline: none;
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid #909090;
+    height: 1.5em;
+    border-radius: 5px;
+    padding-left: 7px;
+}
+
+
+.item-info {
+    display: block;
+    margin: 5px 5px;
+    /* display: none; */
+}
+
+.todos-container {
+    display: flex;
+    padding: 10px ;
+    /* border: 1px solid gray; */
+}
+.item-cont {
+    display: none;
+    /* display: inline; */
+    /* border: 1px solid gray; */
+}
+
+.todos-list-cont{
+    /* display: inline; */
+    max-width: 50%;
+    min-width: 200px;
+    height: 800px;
+    border: 1px solid gray;
+    overflow: auto;
+}
+
+.btn-container{
+    padding: 10px;
+}
+
+.display {
+    display: block;
+}
+
+.delete {
+        margin: 2px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid gray;
+    background-color: #909090;
+    color: aliceblue;
+    /* position: absolute; */
+    top: 5px;
+    right: 20px;
+}
+
+li {
+    padding: 5px 10px;
+    background-color: lightblue;
+    border: 1px solid gray;
+    list-style-type: none;
+}
+
+.todo-cont {
+    display: flex;
+    padding: 5px 10px;
+    background-color: lightblue;
+    border: 1px solid gray;
+    list-style-type: none;
+}
+
+.table-items-wrapper,
+.table-header-wrapper {
+    padding: 0 1em;
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+    position: relative;
+    height: 30px;
+}
+
+.table-item {
+    width: 100%;
+    padding: 0.5em 0;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: green;
+}
+
+.table-item-col {
+    background-color: yellow;
+
+}
+
+.completed{
+    margin: 2px;
+        width: 16px;
+            height: 16px;
+            border: 1px solid gray;
+            background-color: #909090;
+            color: green;
+            /* position: absolute; */
+            top: 5px;
+            right: 20px;
+}
+
+/* justify-content: space-around; */
